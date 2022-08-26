@@ -1,0 +1,81 @@
+<themescreen>
+    #:import Clipboard kivy.core.clipboard.Clipboard
+    #:import Snackbar kivymd.uix.snackbar.Snackbar
+    name: "theme"
+    FitImage:
+        id:pic
+        source: app.get_wall('theme')
+        size: self.width,self.height
+    BoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            #title: "Settings"
+            height: app.mheight
+            #left_action_items: [['chevron-left', lambda screen: app.change_screen('today','left'),'home']]
+            left_action_items: [['chevron-left', lambda screen: app.today(),'home']]
+        ScrollView:
+
+
+            MDList:
+                OneLineAvatarIconListItem: 
+                    id: button
+                    text: "Wallpapepr"
+
+                    IconLeftWidget:
+                        id: button2
+                        icon: "bullhorn"
+                    YourContainer:
+                        id: button3
+                        MDRaisedButton:
+                            id: button5
+                            padding: [0, 0]
+
+                            width: 15
+                            text: 'Select'
+                            pos_hint: {'center_x': .7, 'center_y': .5}
+                            values: app.wall
+                            items: app.wall
+                            #id: noise
+                            on_release: app.choose_drop(app.wall,'wall')          
+                OneLineAvatarIconListItem:
+                    text: "DarkMode"
+                    on_press: 
+                        #app.show_theme_picker()
+                        #app.do_theme()
+                        
+                    
+                    YourContainer:
+                        id: container
+                        MDSwitch:
+                            widget_style: "ios"
+                            icon: "plus"
+                            id: theme2
+                            #active: app.lol()
+                            active: app.check_att('theme2')
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("theme2")
+                                app.save_theme_picker()
+
+                    IconLeftWidget:
+                        icon: "palette"
+                OneLineAvatarIconListItem: 
+                    id: button
+                    text: "Colors"
+
+                    IconLeftWidget:
+                        id: button2
+                        icon: "bullhorn"
+                    YourContainer:
+                        id: button3
+                        MDRaisedButton:
+                            id: button4
+                            padding: [0, 0]
+
+                            width: 15
+                            text: self.theme_cls.primary_palette
+                            pos_hint: {'center_x': .7, 'center_y': .5}
+                            values: app.pcolor
+                            items: app.pcolor
+                            #id: noise
+                            on_release: app.choose_drop(app.pcolor,'pcolor')

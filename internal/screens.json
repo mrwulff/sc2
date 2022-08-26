@@ -1,0 +1,127 @@
+{
+    "home": {
+        "import": "from libs.uix.baseclass.home_screen import HomeScreen",
+        "object": "HomeScreen()",
+        "kv": "libs/uix/kv/home_screen.kv"
+    },
+    "newhome": {
+        "import": "from libs.uix.baseclass.newhome_screen import NewHomeScreen",
+        "object": "NewHomeScreen()",
+        "kv": "libs/uix/kv/newhome_screen.kv"
+    },
+    "settings": {
+        "import": "from libs.uix.baseclass.settings_screen import SettingsScreen",
+        "object": "SettingsScreen()",
+        "kv": "libs/uix/kv/settings_screen.kv"
+    },
+    "notification": {
+        "import": "from libs.uix.baseclass.notification_screen import NotificationScreen",
+        "object": "NotificationScreen()",
+        "kv": "libs/uix/kv/notification_screen.kv"
+    },
+    "info": {
+        "import": "from libs.uix.baseclass.info_screen import InfoScreen",
+        "object": "InfoScreen()",
+        "kv": "libs/uix/kv/info_screen.kv"
+    },
+    "mainmenu": {
+        "import": "from libs.uix.baseclass.mainmenu_screen import MainMenuScreen",
+        "object": "MainMenuScreen()",
+        "kv": "libs/uix/kv/mainmenu_screen.kv"
+    },
+    "history": {
+        "import": "from libs.uix.baseclass.history_screen import HistoryScreen",
+        "object": "HistoryScreen()",
+        "kv": "libs/uix/kv/history_screen.kv"
+    },
+    "pay": {
+        "import": "from libs.uix.baseclass.pay_screen import PayScreen",
+        "object": "PayScreen()",
+        "kv": "libs/uix/kv/pay_screen.kv"
+    },
+    "login": {
+        "import": "from libs.uix.baseclass.login_screen import LoginScreen",
+        "object": "LoginScreen()",
+        "kv": "libs/uix/kv/login_screen.kv"
+    },
+    "stats": {
+        "import": "from libs.uix.baseclass.stats_screen import StatsScreen",
+        "object": "StatsScreen()",
+        "kv": "libs/uix/kv/stats_screen.kv"
+    },
+    "newstats": {
+        "import": "from libs.uix.baseclass.newstats_screen import NewStatsScreen",
+        "object": "NewStatsScreen()",
+        "kv": "libs/uix/kv/newstats_screen.kv"
+    },
+    "about": {
+        "import": "from libs.uix.baseclass.about_screen import AboutScreen",
+        "object": "AboutScreen()",
+        "kv": "libs/uix/kv/about_screen.kv"
+    },
+    "checkin": {
+        "import": "from libs.uix.baseclass.checkin_screen import CheckinScreen",
+        "object": "CheckinScreen()",
+        "kv": "libs/uix/kv/checkin_screen.kv"
+    },
+    "ach": {
+        "import": "from libs.uix.baseclass.ach_screen import AchScreen",
+        "object": "AchScreen()",
+        "kv": "libs/uix/kv/ach_screen.kv"
+    },
+    "chat": {
+        "import": "from libs.uix.baseclass.chat_screen import ChatScreen",
+        "object": "ChatScreen()",
+        "kv": "libs/uix/kv/chat_screen.kv"
+    },
+    "profile": {
+        "import": "from libs.uix.baseclass.profile_screen import ProfileScreen",
+        "object": "ProfileScreen()",
+        "kv": "libs/uix/kv/profile_screen.kv"
+    },
+    "today": {
+        "import": "from libs.uix.baseclass.today_screen import TodayScreen",
+        "object": "TodayScreen()",
+        "kv": "libs/uix/kv/today_screen.kv"
+    },
+    "achinfo": {
+        "import": "from libs.uix.baseclass.achinfoscreen import AchInfoScreen",
+        "object": "AchInfoScreen()",
+        "kv": "libs/uix/kv/achinfoscreen.kv"
+    },
+    "achscore": {
+        "import": "from libs.uix.baseclass.achscorescreen import AchScoreScreen",
+        "object": "AchScoreScreen()",
+        "kv": "libs/uix/kv/achscorescreen.kv"
+    },
+    "animate": {
+        "import": "from libs.uix.baseclass.animate_screen import AnimateScreen",
+        "object": "AnimateScreen()",
+        "kv": "libs/uix/kv/animate_screen.kv"
+    },
+    "onboarding": {
+        "import": "from libs.uix.baseclass.onboarding_screen import onboardingscreen",
+        "object": "onboardingscreen()",
+        "kv": "libs/uix/kv/onboarding_screen.kv"
+    },
+    "backupgoogle": {
+        "import": "from libs.uix.baseclass.backupgoogle_screen import backupgooglescreen",
+        "object": "backupgooglescreen()",
+        "kv": "libs/uix/kv/backupgoogle_screen.kv"
+    },
+    "theme": {
+        "import": "from libs.uix.baseclass.theme_screen import themescreen",
+        "object": "themescreen()",
+        "kv": "libs/uix/kv/theme_screen.kv"
+    },
+    "theme_picker": {
+        "import": "from libs.uix.baseclass.theme_picker_screen import theme_pickerscreen",
+        "object": "theme_pickerscreen()",
+        "kv": "libs/uix/kv/theme_picker_screen.kv"
+    },
+    "pay_breakdown": {
+        "import": "from libs.uix.baseclass.pay_breakdown_screen import pay_breakdownscreen",
+        "object": "pay_breakdownscreen()",
+        "kv": "libs/uix/kv/pay_breakdown_screen.kv"
+    }
+}

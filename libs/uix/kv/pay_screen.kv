@@ -1,0 +1,109 @@
+<PayScreen>
+    name: "Pay"
+    FitImage:
+        #source: 'images/rh.jpg'
+        id: pic
+        source: app.get_wall("today")
+        size: self.width,self.height
+    
+
+    BoxLayout:
+
+        orientation: "vertical"
+        MDTopAppBar:
+            height: app.mheight
+            left_action_items: [['chevron-left', lambda screen: app.change_screen('today','left'),'home']]
+        MDBoxLayout:
+            #orientation: 'horizontal'
+            size_hint: 1,None
+            height:dp(42)
+            MDRaisedButton:
+                text: 'Date'
+                id: paydate
+
+                on_press:(app.do_payperiod_trim('paydate'))
+            MDRaisedButton:
+                text: '$$$'
+
+                id: moneytotal
+                on_press:app.do_payperiod_trim('moneytotal')
+            MDRaisedButton:
+                text: 'Hours'
+
+                id: totalhours
+                on_press:
+                    app.spinner_toggle()
+                    app.do_payperiod_trim('totalhours')
+                    app.spinner_toggle()
+                    #(app.set_pp('custom'))
+            MDIconButton:
+                text: app.check_var(app.rreverse)
+                id: sall
+                on_press:
+                    app.do_payperiod_trim(app.sort_pp)
+
+        MDBoxLayout:
+            #orientation: 'horizontal'
+            size_hint: 1,None
+            #height: app.mheight+10
+            width: 1000
+            height:dp(42)
+
+            
+
+            MDRaisedButton:
+                text: 'YTD'
+                id: YTD
+
+                on_press:(app.do_payperiod_f('YTD'))
+            MDRaisedButton:
+                text: 'Year'
+                id: Year
+
+                on_press:(app.do_payperiod_f('Year'))
+            MDRaisedButton:
+                text: 'All'
+                id: All
+
+                on_press:(app.do_payperiod_f('All'))
+            MDRaisedButton:
+                text: 'Custom'
+                id: Custom
+
+                on_press:
+                    (app.show_date_picker())
+        
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,None
+            height:dp(42)
+            MDRaisedButton:
+                text: 'All'
+                id: dstart
+                #size_hint: .5,None
+                #height: app.mheight
+
+                #md_bg_color: app.theme_cls.primary_light
+                #padding:10
+                #on_press:(app.show_date_picker())
+            MDRaisedButton:
+                text: 'All'
+                #size_hint: .5,None
+                #height: app.mheight
+                #md_bg_color: app.theme_cls.primary_light
+                #padding:10
+                #spacing:10,10
+                id: dend
+                #on_press:(app.show_date_picker())
+            
+        ScrollView:
+            #id: history_view
+
+            
+            MDList:
+            
+                
+                spacing: app.cspacing/2
+                padding: app.cpadding/2,app.cpadding/2
+                bg_color:app.theme_cls.primary_light
+                id: payperiod_list

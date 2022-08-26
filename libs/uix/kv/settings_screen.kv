@@ -1,0 +1,228 @@
+<SettingsScreen>
+    #:import Clipboard kivy.core.clipboard.Clipboard
+    #:import Snackbar kivymd.uix.snackbar.Snackbar
+    name: "settings"
+    #Image:
+    #    source: 'images/rh.jpg'
+    #    size: self.width,self.height
+    BoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            #title: "Settings"
+        #    height: app.mheight
+            left_action_items: [['chevron-left', lambda screen: app.change_screen('today','left'),'home']]
+        ScrollView:
+
+
+            MDList:
+                OneLineAvatarIconListItem:
+                    icon: 'palette'
+                    text: "Login"
+                    on_press: app.change_screen('login', 'left')
+                    
+                    YourContainer:
+                        id: container   
+                    IconLeftWidget:
+                        icon: "account"             
+                OneLineAvatarIconListItem:
+                    text: "Theme"
+                    on_press: 
+                        #app.show_theme_picker()
+                        app.do_theme()
+                        
+                    
+                    YourContainer:
+                        id: container
+                        MDIconButton:
+                            icon: "content-save"
+                            text: "Edit"
+                            on_press:app.save_theme_picker()
+
+                    IconLeftWidget:
+                        icon: "palette"
+                
+                OneLineAvatarIconListItem:
+                    
+                    
+                    #text: "Sample Schedule"
+                    text: 'Randomize Data'
+                    YourContainer:
+                        id: container
+
+                        MDSwitch:
+                            widget_style: "ios"
+                            icon: "plus"
+                            id: usecache
+                            #active: app.lol()
+                            active: app.check_att('usecache')
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("usecache")
+                    IconLeftWidget:
+                        icon: "bug"                
+                
+                OneLineAvatarIconListItem:
+                    
+                    
+                    #text: "Sample Schedule"
+                    text: 'Refresh Data on Load'
+                    YourContainer:
+                        id: container
+
+                        MDSwitch:
+                            widget_style: "ios"
+                            icon: "plus"
+                            id: refreshreload
+                            #active: app.lol()
+                            active: app.check_att('refreshreload')
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("refreshreload")
+                    IconLeftWidget:
+                        icon: "bug"
+            
+                OneLineAvatarIconListItem:
+                    text: "Clear Data"
+                    on_release:
+                        app.show_delete_dialog()
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cancel"
+                OneLineAvatarIconListItem:
+                    text: "Backup Data"
+                    id: bud
+                    on_release:
+                        #app.backup()
+                        #Clipboard.copy(app.backup())
+                        app.backup_new()
+                        #app.backup_tofiles()
+                        Snackbar(text="Backup Copied to Clipboard!",bg_color=app.theme_cls.primary_color).open()
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-upload"
+                    #IconRightWidget:
+                        #id: bud2
+                        #icon: "asdf"
+
+                OneLineAvatarIconListItem:
+                    text: "Restore Data"
+                    on_release:
+                        #app.restore()
+                        self.xxxx=Clipboard.paste()
+                        app.restorebin(self.xxxx)
+                        Snackbar(text="Restored from Backup",bg_color=app.theme_cls.primary_light).open()
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-download"
+                OneLineAvatarIconListItem:
+                    text: 'Download All Paystubs'
+                    on_release: 
+                        app.dlpp()
+
+                OneLineAvatarIconListItem:
+                    text: "Notifications"
+                    on_release:app.makenots("1")
+                    YourContainer:
+                        id: container
+                        MDSwitch:
+                            on_active: app.enable_nots()
+                            widget_style: "ios"
+                            id: switchnotify
+
+                    IconLeftWidget:
+                        icon: "bell"
+
+                OneLineAvatarIconListItem:
+                    text: "Update Schedule"
+                    on_press: app.newstart('',False)
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-download"
+
+                OneLineAvatarIconListItem:
+                    text: "Delete Google Token"
+                    on_press: app.remove_google_token("token2.json")
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-download"
+
+                OneLineAvatarIconListItem:
+                    text: "Test Not"
+                    on_press: app.test_not()
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-download"
+                OneLineAvatarIconListItem:
+                    text: "Update_hi_scores"
+                    on_press: app.update_hi_score_keys()
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "cloud-download"
+
+
+                OneLineAvatarIconListItem:
+                    text: "Show Canceled Shows"
+                    #on_release:app.makenots("1")
+                    YourContainer:
+                        id: container
+                        MDSwitch:
+                            #on_active: app.enable_nots()
+                            widget_style: "ios"
+                            id:hide_canceled
+                            active: app.check_att('hide_canceled')
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("hide_canceled")
+
+                    IconLeftWidget:
+                        icon: "close-circle-outline"
+
+                OneLineAvatarIconListItem:
+                    text: "Today Screen at Start"
+                    #on_release:app.makenots("1")
+                    YourContainer:
+                        id: container
+                        MDSwitch:
+                            #on_active: app.enable_nots()
+                            widget_style: "ios"
+                            active: app.check_att('today_start')
+                            id: today_start
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("today_start")
+
+                    IconLeftWidget:
+                        icon: "home-floor-1"
+                OneLineAvatarIconListItem:
+                    text: "24 Hour Time"
+                    #on_release:app.makenots("1")
+                    YourContainer:
+                        id: container
+                        MDSwitch:
+                            #on_active: app.enable_nots()
+                            widget_style: "ios"
+                            active: app.check_att('twenty')
+                            id: twenty
+                            on_active:
+                                #app.on_checkbox_active(*args)
+                                app.updatetext("twenty")
+
+                    IconLeftWidget:
+                        icon: "hours-24"
+                OneLineAvatarIconListItem:
+                    text: "Show Welcome Message"
+                    on_press: app.do_onboarding(0)
+                    YourContainer:
+                        id: container
+                    IconLeftWidget:
+                        icon: "human-greeting"
+
