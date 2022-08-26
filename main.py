@@ -140,7 +140,8 @@ from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 import os
 """
 import os
-cwd=os.getcwd()
+
+cwd = os.getcwd()
 from pyparsing import ParseExpression
 import webcolors
 
@@ -696,6 +697,7 @@ class Demo3App(MDApp):
         x = lib_readuserdata.readuserdata(App, ad, ios)
 
     def do_gbackup(self):
+        os.chdir(cwd)
         self.root.set_current("backupgoogle")
 
         import libs.lib_new
@@ -2291,6 +2293,8 @@ class Demo3App(MDApp):
     def do_settings(self):
         global x
         # print(x)
+        os.chdir(cwd)
+        print(os.getcwd(),'PRINT OMGOMG')
         self.root.set_current("settings")
         # sm.set_current("settings")
         try:
