@@ -2294,7 +2294,7 @@ class Demo3App(MDApp):
         global x
         # print(x)
         os.chdir(cwd)
-        print(os.getcwd(),'PRINT OMGOMG')
+        print(os.getcwd(), "PRINT OMGOMG")
         self.root.set_current("settings")
         # sm.set_current("settings")
         try:
@@ -3342,7 +3342,7 @@ class Demo3App(MDApp):
     def show_delete_dialog(self):
         from kivymd.uix.dialog import MDDialog
 
-        if not self.dialog:
+        if not self.dialog:420
             self.dialog = MDDialog(
                 text="Discard draft?",
                 buttons=[
@@ -3375,6 +3375,13 @@ class Demo3App(MDApp):
         via FileChoose.handle_selection.
         """
         App.get_running_app().root.ids.result.text = str(self.selection)
+
+    def show_archive(self):
+        import libs.lib_archive
+
+        print("archive")
+        self.root.set_current("archive")
+        libs.lib_archive.load("future_shows",)
 
     def backup_new(self):
         results = "blablabla"

@@ -123,5 +123,10 @@
         "import": "from libs.uix.baseclass.pay_breakdown_screen import pay_breakdownscreen",
         "object": "pay_breakdownscreen()",
         "kv": "libs/uix/kv/pay_breakdown_screen.kv"
+    },
+    "archive": {
+        "import": "from libs.uix.baseclass.archive_screen import archivescreen",
+        "object": "archivescreen()",
+        "kv": "libs/uix/kv/archive_screen.kv"
     }
 }
