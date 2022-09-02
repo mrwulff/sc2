@@ -3,7 +3,8 @@
 
 from ast import Pass
 from asyncio import queues
-from audioop import reverse
+#from audioop import reverse
+#from curses import A_REVERSE
 import profile
 import time
 import sys
@@ -2368,6 +2369,9 @@ class Demo3App(MDApp):
 
     snackbar = None
     rreverse = True
+
+    archive_reverse=False
+    archive_sort='date'
     menurotate = 10
     menuscale = 0.5, 0.5
 
@@ -3342,7 +3346,7 @@ class Demo3App(MDApp):
     def show_delete_dialog(self):
         from kivymd.uix.dialog import MDDialog
 
-        if not self.dialog:420
+        if not self.dialog:
             self.dialog = MDDialog(
                 text="Discard draft?",
                 buttons=[
@@ -3381,7 +3385,54 @@ class Demo3App(MDApp):
 
         print("archive")
         self.root.set_current("archive")
-        libs.lib_archive.load("future_shows",)
+        #self.archive_sort=1
+        
+
+        self.root.current_screen.ids["archive"].clear_widgets()
+        listofdicks = libs.lib_archive.load("/future_shows",ad)
+        listofdicks = sorted(listofdicks, key=lambda i: i[self.archive_sort], reverse=self.archive_reverse)
+
+        bu = ["current", "last", "All", "Custom"]
+        bu2 = ["date", "time", "job"]
+        for i in range(len(bu)):
+            if self.date_range_pp == bu[i]:
+                App.get_running_app().root.current_screen.ids[
+                    bu[i]
+                ].md_bg_color = self.theme_cls.primary_dark
+            else:
+                App.get_running_app().root.current_screen.ids[
+                    bu[i]
+                ].md_bg_color = self.theme_cls.primary_light
+
+        for i in range(len(bu2)):
+            if self.archive_sort == bu2[i]:
+                App.get_running_app().root.current_screen.ids[
+                    bu2[i]
+                ].md_bg_color = self.theme_cls.primary_dark
+            else:
+                App.get_running_app().root.current_screen.ids[
+                    bu2[i]
+                ].md_bg_color = self.theme_cls.primary_light
+        if self.archive_reverse == False:
+            App.get_running_app().root.current_screen.ids[
+                "sall"
+            ].icon = "sort-descending"
+        else:
+            App.get_running_app().root.current_screen.ids[
+                "sall"
+            ].icon = "sort-ascending"
+        '''
+        App.get_running_app().root.current_screen.ids["dstart"].text = (
+            self.format_date(self.fday, "full") + "     to"
+        )
+
+        App.get_running_app().root.current_screen.ids["dend"].text = self.format_date(
+            self.lday, "full"
+        )
+        '''
+
+
+
 
     def backup_new(self):
         results = "blablabla"
@@ -3867,6 +3918,14 @@ class Demo3App(MDApp):
         # Clock.schedule_once()
         self.do_payperiod("x")
         ## Clock.schedule_once(self.do_payperiod())
+    def do_trim_all(self,sort,screen):
+        print (sort,screen,'SORT AND SCREEN')
+        self.show_archive()
+    def do_f_all(self,date_rng,screen):
+        z=self.find_pay_date()
+        App.get_running_app().root.current_screen.ids["dend"].text=str(z)
+        print (date_rng,screen,'DATERANGE AND SCREEN',z)
+        self.show_archive()
 
     def do_payperiod_f(self, date_rng):
 
@@ -3883,7 +3942,6 @@ class Demo3App(MDApp):
         self.root.set_current("pay")
         self.root.get_screen("today").ids["pic"].source = self.get_wall("theme")
         from kivymd.uix.list import ThreeLineListItem
-        from kivy.uix.progressbar import ProgressBar
 
         ssort = self.sort_pp
         rreverse = self.rreverse

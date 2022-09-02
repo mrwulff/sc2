@@ -2,12 +2,102 @@
     #:import Clipboard kivy.core.clipboard.Clipboard
     #:import Snackbar kivymd.uix.snackbar.Snackbar
     name: "archive"
-    Image:
-        source: 'images/rh.jpg'
+    FitImage:
+        #source: 'images/rh.jpg'
+        id: pic
+        source: app.get_wall("today")
         size: self.width,self.height
+    
+
     BoxLayout:
+
         orientation: "vertical"
         MDTopAppBar:
-            #title: "Settings"
             height: app.mheight
             left_action_items: [['chevron-left', lambda screen: app.change_screen('today','left'),'home']]
+        MDBoxLayout:
+            #orientation: 'horizontal'
+            size_hint: 1,None
+            height:dp(42)
+            MDRaisedButton:
+                text: 'Date'
+                id: date
+
+                on_press:(app.do_trim_all('paydate','archive'))
+            MDRaisedButton:
+                text: '$$$'
+
+                id: time
+                on_press:app.do_trim_all('moneytotal','archive')
+            MDRaisedButton:
+                text: 'Hours'
+
+                id: job
+                on_press:
+                    app.do_trim_all('totalhours','archive')
+            MDIconButton:
+                text: app.check_var(app.archive_reverse)
+                id: sall
+                on_press:
+                    app.do_trim_all(app.sort_pp,'archive')
+
+        MDBoxLayout:
+            #orientation: 'horizontal'
+            size_hint: 1,None
+            #height: app.mheight+10
+            width: 1000
+            height:dp(42)
+
+            
+
+            MDRaisedButton:
+                text: 'Current'
+                id: current
+
+                on_press:(app.do_f_all('current','archive'))
+            MDRaisedButton:
+                text: 'Last'
+                id: last
+
+                on_press:(app.do_f_all('last','archive'))
+            MDRaisedButton:
+                text: 'All'
+                id: All
+
+                on_press:(app.do_f_all('All','archive'))
+            MDRaisedButton:
+                text: 'Custom'
+                id: Custom
+
+                on_press:
+                    (app.show_date_picker())
+        
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,None
+            height:dp(42)
+            MDRaisedButton:
+                text: 'All'
+                id: dstart
+                #size_hint: .5,None
+                #height: app.mheight
+
+                #md_bg_color: app.theme_cls.primary_light
+                #padding:10
+                #on_press:(app.show_date_picker())
+            MDRaisedButton:
+                text: 'All'
+                #size_hint: .5,None
+                #height: app.mheight
+                #md_bg_color: app.theme_cls.primary_light
+                #padding:10
+                #spacing:10,10
+                id: dend
+                #on_press:(app.show_date_picker())
+            
+        ScrollView:
+            #id: history_view
+
+            
+            MDList:
+                id: archive
