@@ -1749,7 +1749,7 @@ class Demo3App(MDApp):
         self.root.get_screen("today").ids["stats"].secondary_text = stat_text2
         self.root.get_screen("today").ids["stats"].tertiary_text = stat_text3
 
-        paydate, payperiod = self.find_pay_date()
+        paydate, payperiod = self.find_pay_date(0)
 
         paylist = self.root.get_screen("today").ids["pay"]
         paylist.text = "Next Payday:  " + paydate
@@ -1762,7 +1762,9 @@ class Demo3App(MDApp):
 
             libs.lib_updateuserdata.updateuser(x, ad)
 
-    def find_pay_date(self):
+    def find_pay_date(self,c):
+
+
 
         firstdate = datetime.date(2022, 6, 28)
         #:
@@ -1775,20 +1777,35 @@ class Demo3App(MDApp):
         while flag == False:
 
             nextdate = firstdate + datetime.timedelta(days=14)
-            print(nextdate)
+            #print(nextdate)
             lastdate = nextdate + datetime.timedelta(days=13)
             # print(type(nextdate), type(now), lastdate, flag, z)
             # print(nextdate - now)
             if nextdate >= now:
                 flag = True
-                print("omg", flag)
+                #print("omg", flag)
             firstdate = nextdate
             z = z + 1
         lastdate = nextdate - datetime.timedelta(days=7)
-        lastdate1 = lastdate - datetime.timedelta(days=14)
+        lastdate1 = lastdate - datetime.timedelta(days=13)
+        if c=='Last':
+            lastdate = lastdate - datetime.timedelta(days=14)
+            lastdate1 = lastdate1 - datetime.timedelta(days=14)
+            firstdate=firstdate-datetime.timedelta(days=14)
+        if c=='Next':
+            lastdate = lastdate + datetime.timedelta(days=14)
+            lastdate1 = lastdate1 + datetime.timedelta(days=14)
+            firstdate=firstdate+datetime.timedelta(days=14)
         l = self.format_date(lastdate, "short")
         l2 = self.format_date(lastdate1, "short")
         a = self.format_date(firstdate, "full")
+        #print (c,'TRIM')
+        if c=="All":
+            return ("All","","","")
+        if c!=0:
+            return l2,l,lastdate,lastdate1
+        
+        
 
         return a, l2 + " - " + l
 
@@ -2370,8 +2387,9 @@ class Demo3App(MDApp):
     snackbar = None
     rreverse = True
 
-    archive_reverse=False
+    archive_reverse=True
     archive_sort='date'
+    archive_trim='Next'
     menurotate = 10
     menuscale = 0.5, 0.5
 
@@ -3386,16 +3404,23 @@ class Demo3App(MDApp):
         print("archive")
         self.root.set_current("archive")
         #self.archive_sort=1
+
+        print (self.archive_sort,self.archive_reverse,self.archive_trim,'archive details')
+
+        z,z1,f1,f2=self.find_pay_date(self.archive_trim)
+        App.get_running_app().root.current_screen.ids["dend"].text=str(z1)
+        App.get_running_app().root.current_screen.ids["dstart"].text=str(z)
         
 
         self.root.current_screen.ids["archive"].clear_widgets()
-        listofdicks = libs.lib_archive.load("/future_shows",ad)
+        listofdicks = libs.lib_archive.load("/future_shows",ad,f1,f2)
         listofdicks = sorted(listofdicks, key=lambda i: i[self.archive_sort], reverse=self.archive_reverse)
+        print (len(listofdicks),'lenlistofdicts')
 
-        bu = ["current", "last", "All", "Custom"]
+        bu = ["Current","Next", "Last", "All", "Custom"]
         bu2 = ["date", "time", "job"]
         for i in range(len(bu)):
-            if self.date_range_pp == bu[i]:
+            if self.archive_trim == bu[i]:
                 App.get_running_app().root.current_screen.ids[
                     bu[i]
                 ].md_bg_color = self.theme_cls.primary_dark
@@ -3417,21 +3442,43 @@ class Demo3App(MDApp):
             App.get_running_app().root.current_screen.ids[
                 "sall"
             ].icon = "sort-descending"
+            print ('acend')
         else:
             App.get_running_app().root.current_screen.ids[
                 "sall"
             ].icon = "sort-ascending"
-        '''
-        App.get_running_app().root.current_screen.ids["dstart"].text = (
-            self.format_date(self.fday, "full") + "     to"
-        )
-
-        App.get_running_app().root.current_screen.ids["dend"].text = self.format_date(
-            self.lday, "full"
-        )
-        '''
+            print ('decend')
 
 
+        for z in range(len(listofdicks)):
+            three='Lunches!'
+            if listofdicks[z].get('lunches')==None:
+
+                three='No Lunches'
+            else:
+                three=listofdicks[z]["lunches"]
+                three='test'
+            three=three+"[size=-50]"+'%%%'+listofdicks[z]["date"]+'%%%'+listofdicks[z]["time"]+'%%%'+listofdicks[z]["job"]+'%%%'+listofdicks[z]["show"]
+            panel = ThreeLineListItem(
+                text="Date: "
+                + str((listofdicks[z]["date"])),
+                secondary_text="Show: "
+                + str(listofdicks[z]["show"]),
+                #+ " Hours: "
+                #+ str(listofdicks[z]["totalhours"])
+                #+ " Overtime: "
+                #+ str(listofdicks[z]["othours"]),
+                tertiary_text=three,
+                bg_color=self.theme_cls.bg_dark,
+                radius=[self.c_radius, self.c_radius, self.c_radius, self.c_radius],
+                on_release=self.edit_show_details,
+            )
+
+            self.root.get_screen("archive").ids.archive.add_widget(panel, z)
+    def edit_show_details(self,b):
+        import libs.lib_new
+        show=libs.lib_new.load_archive_json(ad,b.tertiary_text)
+        print (show,'SHOW DATA')
 
 
     def backup_new(self):
@@ -3903,7 +3950,7 @@ class Demo3App(MDApp):
         print("Spinner Toggle")
         app = self.get_running_app()
 
-        sp = self.root.current_screen.ids["spinner"]
+        #sp = self.root.current_screen.ids["spinner"]
         if sp == False:
             sp = True
         else:
@@ -3918,13 +3965,22 @@ class Demo3App(MDApp):
         # Clock.schedule_once()
         self.do_payperiod("x")
         ## Clock.schedule_once(self.do_payperiod())
-    def do_trim_all(self,sort,screen):
-        print (sort,screen,'SORT AND SCREEN')
+    def do_reverse_all(self,sort,screen):
+        #print (sort,screen,'SORT AND SCREEN')
+        if self.archive_reverse == self.archive_reverse:
+            # print("omg its equal")
+            self.archive_reverse = not self.archive_reverse
         self.show_archive()
-    def do_f_all(self,date_rng,screen):
-        z=self.find_pay_date()
-        App.get_running_app().root.current_screen.ids["dend"].text=str(z)
-        print (date_rng,screen,'DATERANGE AND SCREEN',z)
+    def do_sort_all(self,date_rng,screen):
+        
+        self.archive_sort=date_rng
+
+        self.show_archive()
+    
+    def do_trim_all(self,trim,screen):
+        #print (sort,'trimall',self.archive_sort)
+        self.archive_trim=trim
+
         self.show_archive()
 
     def do_payperiod_f(self, date_rng):

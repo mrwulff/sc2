@@ -28,7 +28,7 @@ def make_json_schedule(x, ad):
 
             # lib_createcache.createcache(ad, 15)
             good_login = True
-            # good_login = libs.lib_think.login(ad, x, False, False)
+            good_login = libs.lib_think.login(ad, x, False, False)
             if good_login == False:
                 return False
             z = open(ad + conf, "r", encoding="utf8")
@@ -155,6 +155,26 @@ def format_textt(name):
     name = str.replace(name, ":", "")
     return name
 
+def load_archive_json(ad,x):
+    import json
+    import os
+
+    print (x)
+    junk,date,time,job,show=str.split(x,'%%%')
+    fname = (
+        format_textt(date)
+        + " "
+        + format_textt(time)
+        + " "
+        + job
+        + " "
+        + format_textt(show)
+    )
+    nf = os.path.join(ad, "future_shows", fname) + ".json"
+    with open(nf) as json_file:
+        data = json.load(json_file)
+    return data
+
 
 def update_history(thisdict, ad):
     import hashlib
@@ -187,7 +207,7 @@ def update_history(thisdict, ad):
         flag_new = True
         mystring = str(thisdict)
         hash_object = hashlib.md5(mystring.encode())
-        fname = hash_object.hexdigest()
+        fname2 = hash_object.hexdigest()
 
         try:
             with open(ad + "/future_shows/" + fname + ".json", "w") as outfile:
