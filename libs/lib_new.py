@@ -154,6 +154,22 @@ def format_textt(name):
     name = str.replace(name, "/", "")
     name = str.replace(name, ":", "")
     return name
+def update_archive_json(ad,thisdict):
+    import json
+    fname = (
+        format_textt(thisdict["date"])
+        + " "
+        + format_textt(thisdict["time"])
+        + " "
+        + thisdict["job"]
+        + " "
+        + format_textt(thisdict["show"])
+    )
+
+    with open(ad + "/future_shows/" + fname + ".json", "w") as outfile:
+                json.dump(thisdict, outfile, indent=4)
+
+
 
 def load_archive_json(ad,x):
     import json

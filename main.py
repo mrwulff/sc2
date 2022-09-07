@@ -38,8 +38,7 @@ from kivymd.toast import toast
 from kivymd.uix.pickers import MDColorPicker
 
 # from kivymd.uix.pickers import MDThemePicker
-# from kivymd.uix.picker import MDTimePicker
-
+from kivymd.uix.pickers import MDTimePicker
 
 # from kivymd.uix.picker import MDDatePicker
 # from kivymd.uix.pickers import MDTimePicker
@@ -548,6 +547,8 @@ class Demo3App(MDApp):
     radius = 10 * scale
     cpadding = 20
     sound_effects = ["Ding", "Bang", "Lol"]
+    lunches = ["0", "1", "2",'3']
+    oth=["0", "1", "2",'3',"4", "5", "6",'7',"8", "9", "10",'11']
     mheight = dp(170)
     pictures = [
         "light",
@@ -2467,6 +2468,18 @@ class Demo3App(MDApp):
             self.root.set_current("theme")
             self.root.get_screen("theme").ids["pic"].source = self.get_wall("theme")
 
+        if v2 == "lunches":
+            App.get_running_app().root.current_screen.ids["button4"].text = str(
+                v[text_item]
+            )
+        if v2 == "oth":
+            App.get_running_app().root.current_screen.ids["button5"].text = str(
+                v[text_item]
+            )
+            #self.edit_show_details(App.get_running_app().root.current_screen.ids["button2"])
+            #self.root.set_current("theme")
+            #self.root.get_screen("editShow").ids["lnch"].text=str(v)
+
         # self.root.get_screen(v2).ids["button4"].text = v[text_item]
         global x
         x[v2] = v[text_item]
@@ -2523,7 +2536,28 @@ class Demo3App(MDApp):
                 }
                 for i in range(len(v) - 1)
             ]
-
+        if v2 == "lunches":
+            menu_items = [
+                {
+                    "text": f"{v[i]}",
+                    # "scroll_type": ['bars'],
+                    # "effect_cls": "ScrollEffect",
+                    "viewclass": "OneLineListItem",
+                    "on_release": lambda x=i: self.menu_callback(x, v, v2),
+                }
+                for i in range(len(v) - 1)
+            ]
+        if v2 == "oth":
+            menu_items = [
+                {
+                    "text": f"{v[i]}",
+                    # "scroll_type": ['bars'],
+                    # "effect_cls": "ScrollEffect",
+                    "viewclass": "OneLineListItem",
+                    "on_release": lambda x=i: self.menu_callback(x, v, v2),
+                }
+                for i in range(len(v) - 1)
+            ]
             # self.root.
 
         # print(self.root.get_screen("notification").ids)
@@ -3479,6 +3513,35 @@ class Demo3App(MDApp):
         import libs.lib_new
         show=libs.lib_new.load_archive_json(ad,b.tertiary_text)
         print (show,'SHOW DATA')
+        self.root.set_current("editShow")
+        z=App.get_running_app().root.current_screen.ids[
+                "show"
+            ]
+        z.text=str(show['show'])
+        z.secondary_text=(show['date'])
+        three=show['time']
+        try:
+            three=three+show['endtime']
+        except:
+            pass
+        z.tertiary_text=three+"[size=-0]"+'%%%'+show["date"]+'%%%'+show["time"]+'%%%'+show["job"]+'%%%'+show["show"]
+
+        print (z,'button4')
+
+    def update_show(self):
+        z=App.get_running_app().root.current_screen
+        import libs.lib_new
+        show=libs.lib_new.load_archive_json(ad,z.ids['show'].tertiary_text)
+        timeout=z.ids['newhours'].text
+        show['lunches']=z.ids['button4'].text
+        show['ota']=z.ids['button5'].text
+        show['rate']=z.ids['rate'].text
+        show['notes']=z.ids['notes'].text
+        #print (timeout,lunches,ota,rate,notes,show,'THISISTHEINFO')
+
+        libs.lib_new.update_archive_json(ad,show)
+
+
 
 
     def backup_new(self):
@@ -3779,12 +3842,15 @@ class Demo3App(MDApp):
 
         libs.lib_makeuserdata.makeshowfile(App, xxx[idex], config_file, ios)
 
-    def show_time_picker1(self):
-        # if App.get_running_app().root.current_screen.ids['newhours'].text=='Set Worked Hours':
-        if 1 == 1:
-            y = time_dialog1 = MDTimePicker()
-            x = time_dialog1.bind(time=self.get_time)
-            z = time_dialog1.open()
+    def show_time_picker(self):
+        b= App.get_running_app().root.current_screen.name
+        print (b,dir(b),"BBBBBBBBB")
+        #if App.get_running_app().root.current_screen.ids['newhours'].text=='Set Worked Hours':
+
+        y = time_dialog1 = MDTimePicker()
+            #if b=='editShow':
+        x = time_dialog1.bind(time=self.get_time)
+        z = time_dialog1.open()
 
     def get_time(self, instance, time):
 
