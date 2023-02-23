@@ -17,9 +17,9 @@ toolchain update schedulara24
 toolchain pip install appdirs kivymd pillow humanize mechanize bs4 emoji webcolors pyperclip kivy-garden kivy-garden.graph faker pyparsing kivymd_extensions.akivymd ndicts kivymd_extensions.sweetalert google-auth-oauthlib google-api-python-client plyer
 
 
-
-#/Users/<name>/dist/root/python3/lib/python3.9/site-packages
-
+NEED THIS FILE FOR SOME REASON
+#/Users/<name>/dist/root/python3/lib/python3.9/site-packages/wsgiref
+ 
 
 
 [Website](https://kevinwulff.com/schedulara)
